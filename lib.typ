@@ -74,6 +74,27 @@
   ]
 }
 
+#let _abstract_page(abstract: (lang: "en", content: none), outlined: true) = {
+  let title = transl("Abstract")
+
+  pagebreak()
+  align(left)[
+    #text(lang: abstract.lang)[
+      #heading(level: 1, outlined: outlined)[#title]
+    ]
+    #abstract.content
+  ]
+}
+
+#let _abstract_pages(
+  main: none,
+  secondary: (lang: "fr", content: none)
+) = context {
+  _abstract_page(abstract: (lang: text.lang, content: main))
+  _abstract_page(abstract: secondary, outlined: false)
+  pagebreak()
+}
+
 #let report(
   lang: "en",
   title: "",
@@ -81,6 +102,14 @@
   company-logo: none,
   supervisors: (),
   acknowledgments: none,
+  abstracts: (
+    abstract: none,
+    abstract-translated: (
+      lang: "fr",
+      content: none,
+    )
+  ),
+  references: none,
   body
 ) = {
   set text(lang: lang)
@@ -95,8 +124,9 @@
 
   if acknowledgments != none {
     _acknowledgments_page(acknowledgments)
-    pagebreak(weak: false)
   }
+
+  _abstract_pages(main: abstracts.abstract, secondary: abstracts.abstract-translated)
 
   outline(
     title: transl("Table-of-contents"),
@@ -106,5 +136,31 @@
 
   pagebreak(weak: false)
 
+  set page(numbering: "1")
+
+  counter(page).update(1) 
   body
+
+  if references != none {
+    pagebreak(weak: false)
+    references  
+  }
+
+  context {
+    if query(figure.where(kind: image)).len() > 0 {
+      pagebreak()
+      outline(
+        title: transl("List-of-figures"),
+        target: figure.where(kind: image),
+      )
+    }
+
+    if query(figure.where(kind: table)).len() > 0 {
+      pagebreak()
+      outline(
+        title: transl("List-of-tables"),
+        target: figure.where(kind: table),
+      )
+    }
+  }
 }
