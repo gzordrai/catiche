@@ -1,3 +1,4 @@
+#import "@preview/glossarium:0.5.10": print-glossary
 #import "@preview/transl:0.2.0": transl
 
 #let _title(title) = {
@@ -59,7 +60,6 @@
     #_author(..author)
   ]
 
- 
   place(bottom + center, float: true)[
     #_company(company-logo)
     #_supervisors(supervisors)
@@ -110,6 +110,7 @@
     )
   ),
   references: none,
+  glossary: none,
   body
 ) = {
   set text(lang: lang)
@@ -146,6 +147,11 @@
     references  
   }
 
+  if glossary != none {
+    pagebreak()
+    print-glossary(glossary)
+  }
+ 
   context {
     if query(figure.where(kind: image)).len() > 0 {
       pagebreak()
