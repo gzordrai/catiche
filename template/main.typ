@@ -1,24 +1,58 @@
 #import "@preview/ulille:0.1.0": report
+// Optional: glossary support
+#import "@preview/glossarium:0.5.10": make-glossary, register-glossary, gls, glspl
+
+#show: make-glossary
+
+#let entry-list = (
+  (
+    key: "ulille",
+    short: "ulille",
+    long: "University of Lille",
+    description: "The university of Lille.",
+  ),
+)
+
+#register-glossary(entry-list)
 
 #show: report.with(
-  title: "Titre du rapport",
+  lang: "en",
+  title: "My super internship",
   author: (
-    name: "Prénom Nom",
-    formation: "Master Génie Logiciel",
-    year: "2024 - 2026",
-    mail: "prenom.nom.etu@univ-lille.fr",
+    "Porco Rosso",
+    "Master génie logiciel",
+    "2024 - 2026",
+    "porco.rosso.etu@univ-lille.fr"
   ),
+  company-logo: image("./inria.svg"),
   supervisors: (
     (
-      name: "Prénom Nom",
-      role: "Maître de conférences",
-      company: "Inria",
-      mail: "prenom.nom@univ-lille.fr",
+      "Fio Piccolo",
+      "Aircraft manufacturer",
+      "Milan",
+      "fio.piccolo@univ-lille.fr"
     ),
+    (
+      "Donal Curtis",
+      "Airplane pilot",
+      "United States",
+      "donald.curtis@univ-lille.fr"
+    )
   ),
-  lang: "fr",
+  // Optional: acknowledgments support
+  acknowledgments: "Thank you all!",
+  abstracts: (
+    abstract: "That was an insane internship!",
+    abstract-translated: (
+      lang: "fr",
+      content: "C'était un stage incroyable !"
+    )
+  ),
+  // Optional: references support
+  references: bibliography("refs.bib"),
+  // Optional: glossary support
+  glossary: entry-list,
 )
 
 = Introduction
-
-= Conclusion
+#lorem(500)
