@@ -15,6 +15,15 @@
   ]
 }
 
+#let _company(logo) = {
+  if logo != none {
+    align(center)[
+      #logo  
+    ]
+    v(2.5em)  
+  }
+}
+
 #let _supervisor(name, role, company, mail) = {
   align(center)[
     #name \
@@ -44,15 +53,24 @@
   ]
 }
 
-#let _title_page(title, author, supervisors) = {
+#let _title_page(title, author, company-logo, supervisors) = {
   align(center + horizon)[
     #_title(title)
     #_author(..author)
   ]
 
-  place(bottom, float: true)[
+ 
+  place(bottom + center, float: true)[
+    #_company(company-logo)
     #_supervisors(supervisors)
     #_university_logo("assets/fst-ulille.png")
+  ]
+}
+
+#let _acknowledgments_page(acknowledgments) = {
+  align(left)[
+    = #transl("Acknowledgments")
+    #acknowledgments
   ]
 }
 
@@ -60,21 +78,25 @@
   lang: "en",
   title: "",
   author: (),
+  company-logo: none,
   supervisors: (),
+  acknowledgments: none,
   body
 ) = {
   set text(lang: lang)
-  set page(
-    paper: "a4",
-    numbering: "1"
-  )
+  set page(paper: "a4")
 
   transl(data: toml("lang.toml"))
 
-  _title_page(title, author, supervisors)
+  _title_page(title, author, company-logo, supervisors)
 
   pagebreak(weak: false)
   pagebreak(weak: false)
+
+  if acknowledgments != none {
+    _acknowledgments_page(acknowledgments)
+    pagebreak(weak: false)
+  }
 
   outline(
     title: transl("Table-of-contents"),
