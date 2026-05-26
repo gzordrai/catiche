@@ -1,4 +1,4 @@
-#import "@preview/ulille:0.1.0": report
+#import "@preview/catiche:0.1.0": report
 // Optional: glossary support
 #import "@preview/glossarium:0.5.10": make-glossary, register-glossary, gls, glspl
 
@@ -24,7 +24,8 @@
     "2024 - 2026",
     "porco.rosso.etu@univ-lille.fr"
   ),
-  company-logo: image("./inria.svg"),
+  // Optional: company logo support
+  // company-logo: image("./company-logo.svg"),
   supervisors: (
     (
       "Fio Piccolo",
@@ -49,7 +50,7 @@
     )
   ),
   // Optional: references support
-  references: bibliography("refs.bib"),
+  // references: bibliography("refs.bib"),
   // Optional: glossary support
   glossary: entry-list,
 )
